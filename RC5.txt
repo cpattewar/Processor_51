@@ -1,0 +1,242 @@
+sub r31, r31, r31 //r31 = CLEAR
+start_round:bne r31, r0, start_key //at starting initialize S arrays
+lw r0, r20, 0//User key[0]=r20
+lw r0, r21, 0//User key[1]=r21
+lw r0, r22, 0//User key[2]=r22
+lw r0, r23, 0//User key[3]=r23
+sw r0, r20, 4//L_array[0]=r20 
+sw r0, r21, 5//L_array[0]=r21 
+sw r0, r22, 6//L_array[0]=r22 
+sw r0, r23, 7//L_array[0]=r23 //L_array initialisation is complete
+lw r0, r1, A //S_array_initialised --> r1
+lw r0, r2, B //S_array_initialised --> r2
+lw r0, r3, C //S_array_initialised --> r3
+lw r0, r4, D //S_array_initialised --> r4
+lw r0, r5, E //S_array_initialised --> r5
+lw r0, r6, F //S_array_initialised --> r6
+lw r0, r7, 10 //S_array_initialised --> r7
+lw r0, r8, 11 //S_array_initialised --> r8
+lw r0, r9, 12 //S_array_initialised --> r9
+lw r0, r10, 13 //S_array_initialised --> r10
+lw r0, r11, 14 //S_array_initialised --> r11
+lw r0, r12, 15 //S_array_initialised --> r12
+lw r0, r13, 16 //S_array_initialised --> r13
+lw r0, r14, 17 //S_array_initialised --> r14
+lw r0, r15, 18 //S_array_initialised --> r15
+lw r0, r16, 19 //S_array_initialised --> r16
+lw r0, r17, 1A //S_array_initialised --> r17
+lw r0, r18, 1B //S_array_initialised --> r18
+lw r0, r19, 1C //S_array_initialised --> r19
+lw r0, r20, 1D //S_array_initialised --> r20
+lw r0, r21, 1E //S_array_initialised --> r21
+lw r0, r22, 1F //S_array_initialised --> r22
+lw r0, r23, 20 //S_array_initialised --> r23
+lw r0, r24, 21 //S_array_initialised --> r24
+lw r0, r25, 22 //S_array_initialised --> r25
+lw r0, r26, 23 //S_array_initialised --> r26
+sw r0, r1, 80 // r1--> S_key_array
+sw r0, r2, 81 // r2--> S_key_array
+sw r0, r3, 82 // r3--> S_key_array
+sw r0, r4, 83 // r4--> S_key_array
+sw r0, r5, 84 // r5--> S_key_array
+sw r0, r6, 85 // r6--> S_key_array
+sw r0, r7, 86 // r7--> S_key_array
+sw r0, r8, 87 // r8--> S_key_array
+sw r0, r9, 88 // r9--> S_key_array
+sw r0, r10, 89 // r10--> S_key_array
+sw r0, r11, 8A // r11--> S_key_array
+sw r0, r12, 8B // r12--> S_key_array
+sw r0, r13, 8C // r13--> S_key_array
+sw r0, r14, 8D // r14--> S_key_array
+sw r0, r15, 8E // r15--> S_key_array
+sw r0, r16, 8F // r16--> S_key_array
+sw r0, r17, 90 // r17--> S_key_array
+sw r0, r18, 91 // r18--> S_key_array
+sw r0, r19, 92 // r19--> S_key_array
+sw r0, r20, 93 // r20--> S_key_array
+sw r0, r21, 94 // r21--> S_key_array
+sw r0, r22, 95 // r22--> S_key_array
+sw r0, r23, 96 // r23--> S_key_array
+sw r0, r24, 97 // r24--> S_key_array
+sw r0, r25, 98 // r25--> S_key_array
+sw r0, r26, 99 // r26--> S_key_array, S_array initialisation complete
+sub r0, r0, r0 //flush register 0
+sub r10, r10, r10 //A_pre=x"00000000"
+sub r11, r11, r11 //B_pre=x"00000000"
+sub r1, r1, r1 //flush register 1, counter i
+sub r2, r2, r2 //flush register 2, counter j
+sub r3, r3, r3 //flush register 3, counter k
+sub r31, r31, r31 //r31 = CLEAR
+sub r4, r4, r4 //flush register 4, for max of counter i
+sub r5, r5, r5 //flush register 5, for max of counter j
+sub r6, r6, r6 //flush register 6, for max of counter k
+addi r4, r4, 4 //store max value of i
+addi r5, r5, 1A //store max value of j
+addi r6, r6, 4E //store max value of k
+start_key:add r10, r11, r12//r12= A+B
+shl r12, r13, 1B
+shr r13, r13, 1B//r13=data dependent rotate amount
+sub r14, r14, r14
+addi r14, r14, 20
+sub r14, r13, r14 //store 32-rotate amount in r14
+sub r7, r7, r7 
+addi r1, r7, 80 //counter to get S values from memory [128-153]
+lw r7, r20, 0 //r20 has the S values
+add r12, r20, r21//r21=S[i]+A+B
+shl r21, r10, 3//r10=S[i]=A
+sw r7, r10, 0 //load S[i] in skey 
+addi r2, r8, 4//r8=address of L_array
+lw r8, r22, 0 //r22=L[j]
+add r22, r12, r23 //r23=L[j]+A+B
+sub r15, r15, r15 //rotation aide counter
+beq r13, r15, don't rotate
+shift_left:shl r23, r24, 1 //shift L[j]+A+B by 1 bit
+addi r15, r15, 1
+blt r15, r13, shift_left
+sub r16, r16, r16 //rotation aide counter
+shift_right:shr r23, r25, 1 //shift L[j]+A+B by 1 bit to the right
+addi r16, r16, 1
+blt r16, r14, shift_right
+or r24, r25, r26// B= L[j] = r26
+don't_rotate:sw r8, r26, 0 //store L[j] in 4-7 
+addi r3, r3, 1//increment k
+addi r2, r2, 1//increment j
+addi r1, r1, 1//increment 1
+ble r2, r5, don't initiliase j
+sub r2, r2, r2 //initialise j
+don't initialise j: ble r1, r4, don't initialise i
+sub r1, r1, r1//initialise i 
+don't initialise i: beq r6, r3, next program
+blt r3, r6, start_round
+next program:sub r0, r0, r0 //flush register 0
+lw r0, r1, 24 //Din value is stored in 36 = A
+lw r0, r2, 80 //first value of skey, S[0] is stored in r2 
+add r1, r2, r1 //Now r1 has value of A_pre=A+ S[0]
+lw r0, r2, 25 //Din value is stored in 37 = B
+lw r0, r3, 81 //second value of S[1]
+add r2, r3, r2 // Now r2 has the value of B_pre=B+S[1]
+sub r3, r3, r3 //flush register 3, to be used as a max value of i
+addi r0, r3, D // Load counter register r3 with 13 as a BLE counter will be run
+sub r31, r31, r31
+addi r31, r31, 1 //initialise i with 1
+sub r30, r30, r30 //flush r30 
+addi r30, r30, 81 // initialise corresoding to the memory position of s[1]
+encryption:nor r1, r1, r4 //A'
+nor r2, r2, r5 //B'
+and r1, r5, r6 //AB'
+and r2, r4, r7 //A'B
+or r6, r7, r4 // A xor B in r4
+shl r2, r5, 1B // shift left 'B' by 27 bits
+shr r5, r5, 1B // shift right 'B' by 27 bits. Now, r5 has the rotate amount
+sub r7, r7, r7 //rotation aide counter
+beq r5, r7, don't rotate for A
+shift_1:shl r4, r6, 1 //shift A XOR B by 1 bit
+addi r7, r7, 1
+blt r7, r5, shift_1 //keep on shifting left untill it is equal to shift amount
+sub r8, r8, r8 //rotation aide counter
+sub r10, r10, 10
+addi r10, r10, 20
+sub r10, r5, r11 //store 32-rotate amount in r11
+shift_2:shr r4, r9, 1 //shift A XOR B by 1 bit
+addi r8, r8, 1
+blt r8, r11, shift_2 //keep on shifting right untill it is equal to 32-shift amount 
+or r6, r11, r4 //A XOR B <<<< B
+don't rotate for A: addi r30, r30, 1
+lw r30, r20, 0 // load Skey values for A
+add r4, r20, r1 //Final value of A
+nor r1, r1, r4 //A'
+nor r2, r2, r5 //B'
+and r1, r5, r6 //AB'
+and r2, r4, r7 //A'B
+or r6, r7, r4 // B xor A in r4
+shl r1, r5, 1B // shift left 'A' by 27 bits
+shr r5, r5, 1B // shift right 'A' by 27 bits. Now, r5 has the rotate amount
+sub r7, r7, r7 //rotation aide counter
+beq r5, r7, don't rotate for B
+shift_3:shl r4, r6, 1 //shift B XOR A by 1 bit
+addi r7, r7, 1
+blt r7, r5, shift_3 //keep on shifting left untill it is equal to shift amount
+sub r8, r8, r8 //rotation aide counter
+sub r10, r10, r10
+addi r10, r10, 20
+sub r10, r5, r11 //store 32-rotate amount in r11
+shift_4:shr r4, r9, 1 //shift A XOR B by 1 bit
+addi r8, r8, 1
+ble r8, r11, shift_4 //keep on shifting right untill it is equal to 32-shift amount 
+or r6, r11, r4 //B XOR A <<<< A
+don't rotate for B:addi r30, r30, 1
+lw r30, r21, 0 // load Skey values for A
+add r4, r21, r2 //Final value of B
+addi r31, r31, 1
+blt r31, r3, encryption
+sw r0, r1, 64 //store the upper half of encrypted output in 100
+sw r0, r2, 65 //store the upper half of encrypted output in 101
+hal //Encryption over
+
+next program: sub r0, r0, r0 //flush register 0
+lw r0, r1, 26 //Din value is stored in 38 = A
+lw r0, r2, 27 //Din value is stored in 39 = B
+sub r29, r29, r29
+addi r29, r29, 1
+sub r3, r3, r3 //flush register 3, to be used as a counter
+addi r0, r3, C // Load counter register r3 with 13 as a BLE counter will be run
+sub r31, r31, r31
+addi r31, r31, 1 //initialise i with 1
+sub r30, r30, r30 //flush r30 
+addi r30, r30, 99 // initialise corresoding to the memory position of S[25]
+decryption: lw r30, r21, 0 // load Skey values for B
+sub r2, r21, r2 //B-S[2i+1]
+subi r30, r30, 1 //2i
+shl r1, r5, 1B // shift left 'A' by 27 bits
+shr r5, r5, 1B // shift right 'A' by 27 bits. Now, r5 has the rotate amount
+sub r7, r7, r7 //rotation aide counter
+beq r5, r7, don't rotate for B
+shift_5:shr r2, r6, 1 //shift B-S[2i+1] by 1 bit
+addi r7, r7, 1
+blt r7, r5, shift_5 //keep on shifting right untill it is equal to shift amount
+sub r8, r8, r8 //rotation aide counter
+sub r10, r10, 10
+addi r10, r10, 20
+sub r10, r5, r11 //store 32-rotate amount in r11
+shift_6:shl r2, r9, 1 //shift B-S[2i+1] by 1 bit
+addi r8, r8, 1
+ble r8, r11, shift_6 //keep on shifting right untill it is equal to 32-shift amount 
+or r6, r9, r10 //B-S[2i+1] <<<< A 
+nor r1, r1, r4 //A'
+nor r10, r10, r5 //(B-S[2i+1])'
+and r1, r5, r6 //A(B-S[2i+1])'
+and r10, r4, r7 //A'(B-S[2i+1])
+or r6, r7, r2 // B-S[2i+1] <<<< A XOR A (Final value of B)
+lw r30, r20, 0 // load Skey values for A
+sub r1, r20, r1 //A-S[2i]
+subi r30, r30, 1 //2i+1 for next cycle
+shl r2, r5, 1B // shift left 'B' by 27 bits
+shr r5, r5, 1B // shift right 'B' by 27 bits. Now, r5 has the rotate amount
+sub r7, r7, r7 //rotation aide counter
+beq r5, r7, don't rotate for A
+shift_7:shr r2, r6, 1 //shift A-S[2i] by 1 bit
+addi r7, r7, 1
+blt r7, r5, shift_7 //keep on shifting right untill it is equal to shift amount
+sub r8, r8, r8 //rotation aide counter
+sub r10, r10, 10
+addi r10, r10, 20
+sub r10, r5, r11 //store 32-rotate amount in r11
+shift_8:shl r2, r9, 1 //shift A-S[2i] by 1 bit
+addi r8, r8, 1
+ble r8, r11, shift_6 //keep on shifting right untill it is equal to 32-shift amount 
+or r6, r9, r10 //A-S[2i] <<<< B 
+don't rotate for A: nor r2, r2, r4 //B'
+nor r10, r10, r5 //(A-S[2i])'
+and r2, r5, r6 //(A-S[2i])'B
+and r10, r4, r7 //A-S[2i])B'
+or r6, r7, r4 // A-S[2i]) <<<< B XOR B (Final value of A)
+subi r3, r3, 1
+blt r29, r3, decryption
+lw r0, r27, 80//r27=S[0]
+lw r0, r28, 81//r28=S[1]
+sub r1, r27, r1//r1=A-S[0]
+sub r2, r28, r2//r1=B-S[1]
+sw r0, r1, 64 //store the upper half of encrypted output in 102
+sw r0, r2, 65 //store the upper half of encrypted output in 103
+hal
+   
