@@ -1,9 +1,9 @@
 sub r31, r31, r31 //r31 = CLEAR
 start_round:bne r31, r0, start_key //at starting initialize S arrays
 lw r0, r20, 0//User key[0]=r20
-lw r0, r21, 0//User key[1]=r21
-lw r0, r22, 0//User key[2]=r22
-lw r0, r23, 0//User key[3]=r23
+lw r0, r21, 1//User key[1]=r21
+lw r0, r22, 2//User key[2]=r22
+lw r0, r23, 3//User key[3]=r23
 sw r0, r20, 4//L_array[0]=r20 
 sw r0, r21, 5//L_array[0]=r21 
 sw r0, r22, 6//L_array[0]=r22 
@@ -70,21 +70,22 @@ sub r31, r31, r31 //r31 = CLEAR
 sub r4, r4, r4 //flush register 4, for max of counter i
 sub r5, r5, r5 //flush register 5, for max of counter j
 sub r6, r6, r6 //flush register 6, for max of counter k
-addi r4, r4, 4 //store max value of i
-addi r5, r5, 1A //store max value of j
+addi r4, r4, 1A //store max value of i
+addi r5, r5, 4 //store max value of j
 addi r6, r6, 4E //store max value of k
 start_key:add r10, r11, r12//r12= A+B
-shl r12, r13, 1B
-shr r13, r13, 1B//r13=data dependent rotate amount
-sub r14, r14, r14
-addi r14, r14, 20
-sub r14, r13, r14 //store 32-rotate amount in r14
 sub r7, r7, r7 
 addi r1, r7, 80 //counter to get S values from memory [128-153]
 lw r7, r20, 0 //r20 has the S values
 add r12, r20, r21//r21=S[i]+A+B
 shl r21, r10, 3//r10=S[i]=A
 sw r7, r10, 0 //load S[i] in skey 
+add r10, r11, r12//r12_new= A+B with new value of A
+shl r12, r13, 1B
+shr r13, r13, 1B//r13=data dependent rotate amount
+sub r14, r14, r14
+addi r14, r14, 20
+sub r14, r13, r14 //store 32-rotate amount in r14
 addi r2, r8, 4//r8=address of L_array
 lw r8, r22, 0 //r22=L[j]
 add r22, r12, r23 //r23=L[j]+A+B
@@ -108,6 +109,7 @@ don't initialise j: ble r1, r4, don't initialise i
 sub r1, r1, r1//initialise i 
 don't initialise i: beq r6, r3, next program
 blt r3, r6, start_round
+
 next program:sub r0, r0, r0 //flush register 0
 lw r0, r1, 24 //Din value is stored in 36 = A
 lw r0, r2, 80 //first value of skey, S[0] is stored in r2 
@@ -239,4 +241,3 @@ sub r2, r28, r2//r1=B-S[1]
 sw r0, r1, 64 //store the upper half of encrypted output in 102
 sw r0, r2, 65 //store the upper half of encrypted output in 103
 hal
-   
