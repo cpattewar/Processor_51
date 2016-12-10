@@ -1,1 +1,1 @@
-assembler - converts assembly instructions to binary values
+assembler - converts assembly instructions to hex values
