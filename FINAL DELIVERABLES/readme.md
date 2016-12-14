@@ -1,5 +1,11 @@
-VHDL CODES, TESTBENCHES ->
-RC5 ASSEMBLY CODE       ->
-COMPILER CODE           ->
-BIT FILE                ->
-DEMO VIDEO              ->
+VHDL CODES -> VHDL Code.zip
+
+TESTBENCHES -> TestBench.zip
+
+RC5 ASSEMBLY CODE -> 
+
+COMPILER CODE ->
+
+BIT FILE -> Bit File.zip
+
+DEMO VIDEO -> 
