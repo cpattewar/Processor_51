@@ -3,4 +3,4 @@
 
 Project for Advanced Hardware Design
 
-final working code and report are in folder final_submission
+final working code and report are in folder FINAL DELIVERABLES
