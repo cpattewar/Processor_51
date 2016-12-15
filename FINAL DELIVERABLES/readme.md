@@ -1,11 +1,13 @@
-VHDL CODES -> VHDL Code.zip
+Compressed files where you can find Project related files -
 
-TESTBENCHES -> TestBench.zip
+VHDL CODES -> " VHDL Code.zip "
 
-RC5 ASSEMBLY CODE -> 
+TESTBENCHES -> " TestBench.zip "
 
-COMPILER CODE -> Compiler Code.zip
+RC5 ASSEMBLY CODE -> " Assembly and Machine Codes.zip "
 
-BIT FILE -> Bit File.zip
+COMPILER CODE -> " Compiler Code.zip "
 
-DEMO VIDEO -> 
+BIT FILE -> " Bit File.zip "
+
+DEMO VIDEO -> " https://www.youtube.com/watch?v=R_q38U9si_w "
