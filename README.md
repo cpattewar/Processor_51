@@ -2,9 +2,10 @@
 
 
 Summary:
-- 32bit Processor with execution style of the MIPS ISA, that can perform RC5 Encryption, Decryption and Key Generation
+- Processor_51 is a 32bit Processor designed completely using VHDL
+- The processor has a specialized Instruction Set Algorithm and supports both sequential and concurrent processing
+- We have implemented the RC5 Encryption, Decryption and Key Generation using the instructions of this ISA
 - final working code and report are in folder FINAL DELIVERABLES
-
 
 Hardware Used:
 - Board: Digilent Nexys 4 DDR Board
@@ -13,12 +14,10 @@ Hardware Used:
 - Package: CSG324
 - Speed Grade : -1 
 
-
 Software Used:
 - VHDL Modelling: Xilinx ISE Project Navigator Purpose 
 - Programming the FPGA: Digilent Adept
 - Assembler: Python 2.7
-
 
 Processor Specs:
 - Speed: 83.918 MHz
