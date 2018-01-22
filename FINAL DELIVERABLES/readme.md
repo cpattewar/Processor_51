@@ -1,15 +1,19 @@
-Compressed files where you can find Project related files -
+Files where you can find Project related files -
 
-VHDL CODES -> " VHDL Code.zip "
+" Assembly and Machine Codes.zip "                          -> RC5 ASSEMBLY CODE
 
-TESTBENCHES -> " TestBench.zip "
+" Bit File.zip "                                            -> BIT FILE
 
-RC5 ASSEMBLY CODE -> " Assembly and Machine Codes.zip "
+" Compiler Code.zip "                                       -> COMPILER CODE
 
-COMPILER CODE -> " Compiler Code.zip "
+" Poster for Presentation "                                 -> INTRO TO PROCESSOR_51
 
-BIT FILE -> " Bit File.zip "
+" Processor with Dynamic Instruction Memory Updation.zip "  -> EXPERIMENTAL
 
-DEMO VIDEO -> " https://www.youtube.com/watch?v=R_q38U9si_w "
+" Processor Report "                                        -> PROCESSOR_51 OBSERAVATIONS AND CONCLUSIIONS
 
-EXPERIMENTAL -> "Processor with Dynamic Instruction Memory Updation.zip"
+" TestBench.zip "                                           -> TESTBENCHES
+
+" VHDL Code.zip "                                           -> VHDL CODES 
+
+" https://www.youtube.com/watch?v=R_q38U9si_w "             -> DEMO VIDEO
